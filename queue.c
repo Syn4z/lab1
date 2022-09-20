@@ -158,5 +158,9 @@ int main()
 				exit(0);
 			default:
 				printf("\nTry again!");
+		}
+	}
+
+	return 0;
 }
 
