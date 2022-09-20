@@ -25,6 +25,7 @@ void check(int element)
             return;
         }
     }
+
     queue_struct[i] = element;
 }
 
@@ -65,7 +66,6 @@ void delete(int element)
                 queue_struct[i] = queue_struct[i + 1];
 			}	
 
-        queue_struct[i] = -99;
         rear--;
 
         if (rear == -1) 
@@ -73,6 +73,7 @@ void delete(int element)
         return;
         }
     }
+
     printf("\n\t%d is not in queue!", element);
 }
 
@@ -115,7 +116,34 @@ void display()
 	front = 0;
 }
 
-void file()
+void load_file()
+{
+    int i = 0;
+    front = 0;
+    rear = -1;
+
+    FILE *loaded_file  = fopen("load.txt", "r");
+
+    if (loaded_file == NULL) 
+	{   
+        printf("\n\tFile cannon be accesed!"); 
+        exit(0);
+    }
+    else
+	{
+        printf("\n\tFile loaded up");
+
+        while(fscanf(loaded_file, "%d ", &queue_struct[i]) != EOF)
+		{
+            i++;
+            rear++;
+        }
+    }
+
+    fclose(loaded_file);
+}
+
+void save_file()
 {
 	FILE *fp;
 	fp = fopen("queue.txt", "w+");
@@ -141,8 +169,9 @@ int main()
 		printf("\nType '3' to display the elements of queue");
 		printf("\nType '4' to reverse the queue");
         printf("\nType '5' to sort the queue");
-		printf("\nType '6' to save queue to a file");
-        printf("\nType '7' to quit");
+		printf("\nType '6' to load queue from a file");
+		printf("\nType '7' to save queue to a file");
+        printf("\nType '8' to quit");
 		printf("\n------------------------------------------");
 		printf("\n\n\tType in your choice: ");
 		scanf("%d", &choice);
@@ -170,11 +199,14 @@ int main()
                 break;	
 			case 5:
 				sort();
-				break;	
+				break;
 			case 6:
-				file();
-				break;	
+				load_file();
+				break;		
 			case 7:
+				save_file();
+				break;	
+			case 8:
 				exit(0);	
 			default:
 				printf("\nTry again!");
