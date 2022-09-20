@@ -135,13 +135,15 @@ int main()
 
 	while (1)
 	{
-		printf("\n\nType '1' to insert an element to queue");
+		printf("\n\n==========================================");
+		printf("\nType '1' to insert an element to queue");
 		printf("\nType '2' to delete an element from queue");
 		printf("\nType '3' to display the elements of queue");
 		printf("\nType '4' to reverse the queue");
         printf("\nType '5' to sort the queue");
-        printf("\nType '6' to quit");
-		printf("\nType '7' to save queue to a file");
+		printf("\nType '6' to save queue to a file");
+        printf("\nType '7' to quit");
+		printf("\n------------------------------------------");
 		printf("\n\n\tType in your choice: ");
 		scanf("%d", &choice);
 
@@ -170,10 +172,10 @@ int main()
 				sort();
 				break;	
 			case 6:
-				exit(0);
-			case 7:
 				file();
 				break;	
+			case 7:
+				exit(0);	
 			default:
 				printf("\nTry again!");
 		}
