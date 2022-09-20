@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include<stdlib.h>
-#define MAX 50
+#define limit 99
 
 void insert();
 void delete();
 void display();
 void reverse();
-int queue_struct[MAX];
+int queue_struct[limit];
 int rear = - 1;
 int front = - 1;
 
@@ -17,7 +17,7 @@ void check(int element)
     {
         if (element >= queue_struct[i])
         {
-            for (int j = rear + 1; j > i; j--)
+            for (int j = rear+1; j > i; j--)
             {
                 queue_struct[j] = queue_struct[j - 1];
             }
@@ -30,7 +30,7 @@ void check(int element)
 
 void insert(int element)
 {
-	if (rear >= MAX - 1)
+	if (rear >= limit - 1)
 	{
 		printf("\nQueue Overflow!");
 		return;
@@ -76,10 +76,10 @@ void delete(int element)
     printf("\n\t%d is not in queue!", element);
 }
 
-void reverseQueue()
+void reverse()
 {
-    int i,j,t;
-	for (i=front,j=rear;i<j;i++,j--)
+    int i, j, t;
+	for (i = front, j = rear; i < j; i++,j--)
     {
 		t = queue_struct[i];
 		queue_struct[i] = queue_struct[j];
@@ -92,9 +92,9 @@ void reverseQueue()
 void sort()
 {
 			printf("\n\tSorted queue: ");
-			reverseQueue();
+			reverse();
 			printf("\n\tInitial queue: ");
-			reverseQueue();
+			reverse();
 }
 
 void display()
@@ -115,6 +115,20 @@ void display()
 	front = 0;
 }
 
+void file()
+{
+	FILE *fp;
+	fp = fopen("queue.txt", "w+");
+	for (int i = 0; i < limit; i++)
+		{
+			if (queue_struct[i] == 0)
+				break;
+			fprintf(fp, "%i ", queue_struct[i]);
+		}
+	fclose(fp);
+	printf("\n\n\tQueue saved to file named 'queue.txt'");
+}
+
 int main()
 {
 	int choice, e;
@@ -127,6 +141,7 @@ int main()
 		printf("\nType '4' to reverse the queue");
         printf("\nType '5' to sort the queue");
         printf("\nType '6' to quit");
+		printf("\nType '7' to save queue to a file");
 		printf("\n\n\tType in your choice: ");
 		scanf("%d", &choice);
 
@@ -147,15 +162,18 @@ int main()
 				break;
 			case 4:
 				printf("\n\tReversed queue: ");
-				reverseQueue();
+				reverse();
 				printf("\n\tInitial queue: ");
-				reverseQueue();
+				reverse();
                 break;	
 			case 5:
 				sort();
 				break;	
 			case 6:
 				exit(0);
+			case 7:
+				file();
+				break;	
 			default:
 				printf("\nTry again!");
 		}
