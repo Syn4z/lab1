@@ -6,9 +6,15 @@ void insert();
 void delete();
 void display();
 void reverse();
+void clear();
 int queue_struct[limit];
 int rear = - 1;
 int front = - 1;
+
+void clear()
+{
+    system("clear");
+}
 
 void check(int element)
 {
@@ -72,10 +78,10 @@ void delete(int element)
             front = -1;
         return;
         }
-    }
+	}
 
     printf("\n\t%d is not in queue!", element);
-}
+}	
 
 void reverse()
 {
@@ -86,16 +92,29 @@ void reverse()
 		queue_struct[i] = queue_struct[j];
 		queue_struct[j] = t;
 	}
-
-	display();
+	printf("\n\tReversed queue: ");
+	for (i = front; i <= rear; i++)
+			printf("%d ", queue_struct[i]);
 }
 
 void sort()
 {
-			printf("\n\tSorted queue: ");
-			reverse();
-			printf("\n\tInitial queue: ");
-			reverse();
+	printf("\n\tSorted queue: ");
+	int i, j, t;
+	for (i = front, j = rear; i < j; i++,j--)
+    {
+		t = queue_struct[i];
+		queue_struct[i] = queue_struct[j];
+		queue_struct[j] = t;
+	}
+	for (i = front; i <= rear; i++)
+			printf("%d ", queue_struct[i]);
+	for (i = front, j = rear; i < j; i++,j--)
+    {
+		t = queue_struct[i];
+		queue_struct[i] = queue_struct[j];
+		queue_struct[j] = t;
+	}
 }
 
 void display()
@@ -126,7 +145,7 @@ void load_file()
 
     if (loaded_file == NULL) 
 	{   
-        printf("\n\tFile cannon be accesed!"); 
+        printf("\n\tFile cannot be accesed!"); 
         exit(0);
     }
     else
@@ -192,10 +211,14 @@ int main()
 				display();
 				break;
 			case 4:
-				printf("\n\tReversed queue: ");
 				reverse();
-				printf("\n\tInitial queue: ");
-				reverse();
+				int i, j, t;
+				for (i = front, j = rear; i < j; i++,j--)
+				{
+					t = queue_struct[i];
+					queue_struct[i] = queue_struct[j];
+					queue_struct[j] = t;
+				}
                 break;	
 			case 5:
 				sort();
@@ -211,8 +234,9 @@ int main()
 			default:
 				printf("\nTry again!");
 		}
+		clear();
 	}
-
+	
 	return 0;
 }
 
