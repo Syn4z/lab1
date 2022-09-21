@@ -2,11 +2,19 @@
 #include<stdlib.h>
 #define limit 99
 
-void insert();
-void delete();
-void display();
-void reverse();
+void check();
 void clear();
+void insert();
+void priority_insert();
+void circular_insert();
+void delete();
+void circular_delete();
+void reverse();
+void sort();
+void display();
+int priority_queue();
+int circular_queue();
+int main();
 int queue_struct[limit];
 int rear = - 1;
 int front = - 1;
@@ -37,9 +45,22 @@ void check(int element)
 
 void insert(int element)
 {
+    if (rear == limit - 1)
+        printf("\n\tQueue Overflow!");
+    else
+	{
+        if (front== - 1)
+            front = 0;
+            rear = rear + 1;
+            queue_struct[rear] = element;
+    }
+}
+
+void priority_insert(int element)
+{
 	if (rear >= limit - 1)
 	{
-		printf("\nQueue Overflow!");
+		printf("\n\tQueue Overflow!");
 		return;
 	}
 
@@ -53,6 +74,19 @@ void insert(int element)
 	else
 		check(element);
 	rear++;
+}
+
+void circular_insert(int element)
+{
+    if ((front == rear + 1) || (front == 0 && rear == limit - 1))
+        printf("\n\tQueue Overflow!");
+    else 
+	{
+        if (front == -1) 
+            front = 0;
+            rear = (rear + 1) % limit;
+            queue_struct[rear] = element;
+    }
 }
 
 void delete(int element)
@@ -82,6 +116,27 @@ void delete(int element)
 
     printf("\n\t%d is not in queue!", element);
 }	
+
+void circular_delete()
+{
+    if (front == -1) 
+	{
+        printf("\n\tQueue is empty!");
+    } 
+    else 
+	{
+        if (front == rear) 
+		{
+            front = -1;
+            rear = -1;
+        } 
+        else 
+		{
+            printf("Element deleted from queue is: %d \n", queue_struct[front]);
+            front = (front + 1) % limit;
+        }
+    }
+}
 
 void reverse()
 {
@@ -176,13 +231,132 @@ void save_file()
 	printf("\n\n\tQueue saved to file named 'queue.txt'");
 }
 
+int priority_queue()
+{
+	int choice, e;
+
+	while (1)
+	{
+		printf("\n\n==================Priority Queue==================");
+		printf("\nType '1' to insert an element to priority queue");
+		printf("\nType '2' to delete an element from priority queue");
+		printf("\nType '3' to display the elements of priority queue");
+		printf("\nType '4' to reverse the priority queue");
+		printf("\nType '5' to load priority queue from a file");
+		printf("\nType '6' to save priority queue to a file");
+		printf("\nType '7' to quit");
+		printf("\nType '0' to go back to Queue Menu");
+		printf("\n--------------------------------------------------");
+		printf("\n\n\tType in your choice: ");
+		scanf("%d", &choice);
+
+		switch(choice)
+		{
+			case 1:
+				printf("Type the element to insert: ");
+				scanf("%d", &e);
+				priority_insert(e);
+				break;
+			case 2:
+				circular_delete();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+				reverse();
+				int i, j, t;
+				for (i = front, j = rear; i < j; i++,j--)
+				{
+					t = queue_struct[i];
+					queue_struct[i] = queue_struct[j];
+					queue_struct[j] = t;
+				}
+				break;	
+			case 5:
+				load_file();
+				break;		
+			case 6:
+				save_file();
+				break;	
+			case 7:
+				exit(0);
+			case 0:
+				main();
+			default:
+				printf("\nTry again!");
+		}
+		clear();
+	}		
+}
+
+int circular_queue()
+{
+	int choice, e;
+
+	while (1)
+	{
+		printf("\n\n==================Circular Queue==================");
+		printf("\nType '1' to insert an element to circular queue");
+		printf("\nType '2' to delete an element from circular queue");
+		printf("\nType '3' to display the elements of circular queue");
+		printf("\nType '4' to reverse the circular queue");
+		printf("\nType '5' to load circular queue from a file");
+		printf("\nType '6' to save circular queue to a file");
+		printf("\nType '7' to quit");
+		printf("\nType '0' to go back to Queue Menu");
+		printf("\n--------------------------------------------------");
+		printf("\n\n\tType in your choice: ");
+		scanf("%d", &choice);
+
+		switch(choice)
+		{
+			case 1:
+				printf("Type the element to insert: ");
+				scanf("%d", &e);
+				circular_insert(e);
+				break;
+			case 2:
+				circular_delete();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+				reverse();
+				int i, j, t;
+				for (i = front, j = rear; i < j; i++,j--)
+				{
+					t = queue_struct[i];
+					queue_struct[i] = queue_struct[j];
+					queue_struct[j] = t;
+				}
+				break;	
+			case 5:
+				load_file();
+				break;		
+			case 6:
+				save_file();
+				break;	
+			case 7:
+				exit(0);
+			case 0:
+				main();		
+			default:
+				printf("\nTry again!");
+		}
+		clear();
+	}		
+}
+
 int main()
 {
 	int choice, e;
 
 	while (1)
 	{
-		printf("\n\n==========================================");
+		clear();
+		printf("\n\n================Queue Menu================");
 		printf("\nType '1' to insert an element to queue");
 		printf("\nType '2' to delete an element from queue");
 		printf("\nType '3' to display the elements of queue");
@@ -190,7 +364,9 @@ int main()
         printf("\nType '5' to sort the queue");
 		printf("\nType '6' to load queue from a file");
 		printf("\nType '7' to save queue to a file");
-        printf("\nType '8' to quit");
+        printf("\nType '0' to quit");
+		printf("\nType '8' to enter priority queue");
+		printf("\nType '9' to enter circular queue");
 		printf("\n------------------------------------------");
 		printf("\n\n\tType in your choice: ");
 		scanf("%d", &choice);
@@ -229,12 +405,17 @@ int main()
 			case 7:
 				save_file();
 				break;	
+			case 0:
+				exit(0);
 			case 8:
-				exit(0);	
+				clear();
+				priority_queue();		
+			case 9:
+				clear();
+				circular_queue();		
 			default:
 				printf("\nTry again!");
 		}
-		clear();
 	}
 	
 	return 0;
