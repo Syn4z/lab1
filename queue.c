@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
-#define limit siezeof(int)
+#define limit 99
 
 void check();
 void clear();
@@ -49,7 +49,7 @@ void insert(int element)
         printf("\n\tQueue Overflow!");
     else
 	{
-        if (front== - 1)
+        if (front == - 1)
             front = 0;
             rear = rear + 1;
             queue_struct[rear] = element;
