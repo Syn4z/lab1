@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
-#define limit 99
+#define limit siezeof(int)
 
 void check();
 void clear();
